@@ -2,29 +2,29 @@
   "version": "0.2.0",
   "configurations": [
     {
-      "name": "Wails: Production aa",
+      "name": "Wails: Production GoHosts",
       "type": "go",
       "request": "launch",
       "mode": "exec",
-      "program": "${workspaceFolder}/build/bin/aa",
+      "program": "${workspaceFolder}/build/bin/GoHosts",
       "preLaunchTask": "build",
       "cwd": "${workspaceFolder}"
     },
     {
-      "name": "Wails: Debug aa",
+      "name": "Wails: Debug GoHosts",
       "type": "go",
       "request": "launch",
       "mode": "exec",
-      "program": "${workspaceFolder}/build/bin/aa",
+      "program": "${workspaceFolder}/build/bin/GoHosts",
       "preLaunchTask": "build debug",
       "cwd": "${workspaceFolder}"
     },
     {
-      "name": "Wails: Dev aa",
+      "name": "Wails: Dev GoHosts",
       "type": "go",
       "request": "launch",
       "mode": "exec",
-      "program": "${workspaceFolder}/build/bin/aa",
+      "program": "${workspaceFolder}/build/bin/GoHosts",
       "preLaunchTask": "build dev",
       "cwd": "${workspaceFolder}"
     }
