@@ -1,6 +1,9 @@
 build/bin
-node_modules
 frontend/dist
 
 # cache
 arms_cache
+
+# dependencies
+vendor
+node_modules

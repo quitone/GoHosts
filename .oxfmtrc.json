@@ -1,0 +1,23 @@
+{
+  "semi": false,
+  "singleQuote": true,
+  "printWidth": 140,
+  "trailingComma": "all",
+  "arrowParens": "avoid",
+  "endOfLine": "lf",
+  "tabWidth": 2,
+  "useTabs": false,
+  "bracketSpacing": true,
+  "jsxBracketSameLine": false,
+  "jsxSingleQuote": false,
+  "proseWrap": "preserve",
+  "htmlWhitespaceSensitivity": "css",
+  "vueIndentScriptAndStyle": false,
+  "quoteProps": "consistent",
+  "sortImports": true,
+  "bracketSameLine": true,
+  "insertFinalNewline": true,
+  "sortPackageJson": true,
+  "sortTailwindcss": true,
+  "objectWrap": "preserve"
+}

@@ -1,9 +1,10 @@
 <script lang="ts" setup>
-import HelloWorld from './components/HelloWorld.vue'</script>
+import HostsView from "@/components/HostsView.vue";
+import SchemeManager from "@/components/SchemeManager.vue";
+</script>
 
 <template>
-  <img id="logo" alt="Wails logo" src="./assets/images/logo-universal.png"/>
-  <HelloWorld/>
+  <SchemeManager />
 </template>
 
 <style>

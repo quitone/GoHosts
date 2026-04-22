@@ -1,0 +1,7 @@
+{
+  "env": {
+    "builtin": true
+  },
+  "globals": {},
+  "rules": {}
+}
