@@ -96,3 +96,13 @@ func (a *App) SaveScheme(scheme config.Scheme) error {
 func (a *App) DeleteScheme(id string) error {
 	return a.configService.DeleteScheme(id)
 }
+
+// LoadConfig 加载完整的配置信息（包括所有方案和当前激活的方案ID）。
+func (a *App) LoadConfig() (*config.Config, error) {
+	return a.configService.Load()
+}
+
+// SaveConfig 将完整的配置信息保存到数据库。
+func (a *App) SaveConfig(cfg *config.Config) error {
+	return a.configService.Save(cfg)
+}
