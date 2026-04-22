@@ -1,33 +1,23 @@
 <template>
-  <div class="scheme-manager">
-    <div class="sidebar-header">
-      <h2>方案管理</h2>
-      <n-button
-        size="small"
-        type="primary"
-        @click="showAddModal = true"
-        data-test="add-scheme"
-      >
-        + 新建
-      </n-button>
-    </div>
-
-    <div class="scheme-list">
+  <div class="flex flex-col h-full">
+    <div class="flex-1 overflow-y-auto p-8px">
       <div
         v-for="scheme in store.schemes"
         :key="scheme.id"
-        class="scheme-item"
+        class="group p-10px-12px rounded-6px mb-6px cursor-pointer bg-neutral-800 b b-transparent transition-all duration-200 hover:bg-neutral-700"
         :class="{
-          active: scheme.id === store.activeSchemeId,
-          selected: scheme.id === store.selectedSchemeId,
+          'b-primary bg-primary-light': scheme.id === store.selectedSchemeId,
+          'border-l-3 border-l-success': scheme.id === store.activeSchemeId,
         }"
         @click="store.selectScheme(scheme.id)"
       >
         <div class="scheme-info">
-          <div class="scheme-name-row">
-            <span v-if="editingId !== scheme.id" class="scheme-name">{{
-              scheme.name
-            }}</span>
+          <div class="flex items-center justify-between gap-8px mb-6px">
+            <span
+              v-if="editingId !== scheme.id"
+              class="font-500 text-neutral-100 word-break-all text-14px"
+              >{{ scheme.name }}</span
+            >
             <n-input
               v-else
               v-model:value="editingName"
@@ -36,12 +26,16 @@
               @blur="finishRename"
               @keyup.enter="finishRename"
             />
-            <span v-if="scheme.id === store.activeSchemeId" class="active-badge"
+            <span
+              v-if="scheme.id === store.activeSchemeId"
+              class="text-11px px-6px py-1px rounded-4px bg-success/20 text-success whitespace-nowrap flex-shrink-0"
               >激活</span
             >
           </div>
-          <div class="scheme-meta">
-            <span class="scheme-type">{{ scheme.type }}</span>
+          <div class="flex items-center justify-between gap-8px">
+            <span class="text-12px text-neutral-400 uppercase">{{
+              scheme.type
+            }}</span>
             <n-switch
               :value="scheme.enabled"
               size="small"
@@ -49,7 +43,9 @@
             />
           </div>
         </div>
-        <div class="scheme-actions">
+        <div
+          class="flex gap-8px mt-8px pt-8px b-t b-neutral-700 opacity-0 transition-opacity duration-200 group-hover:opacity-100"
+        >
           <n-button text size="tiny" @click.stop="startRename(scheme)"
             >重命名</n-button
           >
@@ -68,20 +64,20 @@
           </n-popconfirm>
         </div>
       </div>
-
-      <div v-if="store.schemes.length === 0" class="empty-tip">
-        暂无方案，点击「新建」添加
-      </div>
     </div>
 
-    <div class="sidebar-footer">
-      <n-button size="small" @click="handleExport">导出配置</n-button>
-      <n-button size="small" @click="handleImport">导入配置</n-button>
+    <div class="flex gap-8px p-12px-16px b-t b-neutral-700 flex-shrink-0">
+      <n-button size="small" @click="handleExport" class="flex-1"
+        >导出配置</n-button
+      >
+      <n-button size="small" @click="handleImport" class="flex-1"
+        >导入配置</n-button
+      >
       <input
         ref="fileInputRef"
         type="file"
         accept=".json"
-        style="display: none"
+        class="hidden"
         @change="onFileSelected"
       />
     </div>
@@ -91,7 +87,7 @@
       v-model:show="showAddModal"
       title="新建方案"
       preset="card"
-      style="width: 420px"
+      class="w-420px"
       :bordered="false"
     >
       <n-form label-placement="left" label-width="80">
@@ -119,7 +115,7 @@
         </n-form-item>
       </n-form>
       <template #footer>
-        <div style="display: flex; justify-content: flex-end; gap: 8px">
+        <div class="flex justify-end gap-8px">
           <n-button @click="showAddModal = false">取消</n-button>
           <n-button
             type="primary"
@@ -254,125 +250,5 @@ function onFileSelected(e: Event) {
 </script>
 
 <style scoped>
-.scheme-manager {
-  display: flex;
-  flex-direction: column;
-  height: 100%;
-}
-
-.sidebar-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 14px 16px;
-  border-bottom: 1px solid #334155;
-  flex-shrink: 0;
-}
-
-.sidebar-header h2 {
-  margin: 0;
-  font-size: 16px;
-  color: #e2e8f0;
-  font-weight: 600;
-}
-
-.scheme-list {
-  flex: 1;
-  overflow-y: auto;
-  padding: 8px;
-}
-
-.scheme-item {
-  padding: 10px 12px;
-  border-radius: 6px;
-  margin-bottom: 6px;
-  cursor: pointer;
-  background: #1e293b;
-  border: 1px solid transparent;
-  transition: all 0.2s;
-}
-
-.scheme-item:hover {
-  background: #334155;
-}
-
-.scheme-item.selected {
-  border-color: #4a9eff;
-  background: #1e3a5f;
-}
-
-.scheme-item.active {
-  border-left: 3px solid #22c55e;
-}
-
-.scheme-name-row {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 8px;
-  margin-bottom: 6px;
-}
-
-.scheme-name {
-  font-weight: 500;
-  color: #e2e8f0;
-  word-break: break-all;
-  font-size: 14px;
-}
-
-.active-badge {
-  font-size: 11px;
-  padding: 1px 6px;
-  border-radius: 4px;
-  background: #22c55e30;
-  color: #22c55e;
-  white-space: nowrap;
-  flex-shrink: 0;
-}
-
-.scheme-meta {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 8px;
-}
-
-.scheme-type {
-  font-size: 12px;
-  color: #94a3b8;
-  text-transform: uppercase;
-}
-
-.scheme-actions {
-  display: flex;
-  gap: 8px;
-  margin-top: 8px;
-  padding-top: 8px;
-  border-top: 1px solid #334155;
-  opacity: 0;
-  transition: opacity 0.2s;
-}
-
-.scheme-item:hover .scheme-actions {
-  opacity: 1;
-}
-
-.empty-tip {
-  text-align: center;
-  color: #94a3b8;
-  padding: 24px;
-  font-size: 14px;
-}
-
-.sidebar-footer {
-  display: flex;
-  gap: 8px;
-  padding: 12px 16px;
-  border-top: 1px solid #334155;
-  flex-shrink: 0;
-}
-
-.sidebar-footer .n-button {
-  flex: 1;
-}
+/* 所有样式已转换为 UnoCSS 原子类 */
 </style>

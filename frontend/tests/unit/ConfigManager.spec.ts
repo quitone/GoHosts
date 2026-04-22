@@ -48,7 +48,7 @@ describe('ConfigManager', async () => {
   })
 
   it('saves scheme on save button click', async () => {
-    ;(SaveScheme as any).mockResolvedValue(undefined)
+    ; (SaveScheme as any).mockResolvedValue(undefined)
 
     const store = useHostsStore()
     store.schemes = [
