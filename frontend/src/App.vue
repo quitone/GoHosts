@@ -1,22 +1,53 @@
-<script lang="ts" setup>
-import HostsView from "@/components/HostsView.vue";
+<script setup lang="ts">
+import { onMounted } from "vue";
+import { useHostsStore } from "@/stores/hosts";
 import SchemeManager from "@/components/SchemeManager.vue";
+import ConfigManager from "@/components/ConfigManager.vue";
+
+const store = useHostsStore();
+
+onMounted(() => {
+  store.loadConfig();
+  store.loadSystemHosts();
+});
 </script>
 
 <template>
-  <SchemeManager />
+  <div class="app-layout">
+    <aside class="sidebar">
+      <SchemeManager />
+    </aside>
+    <main class="main-content">
+      <ConfigManager />
+    </main>
+  </div>
 </template>
 
 <style>
-#logo {
-  display: block;
-  width: 50%;
-  height: 50%;
-  margin: auto;
-  padding: 10% 0 0;
-  background-position: center;
-  background-repeat: no-repeat;
-  background-size: 100% 100%;
-  background-origin: content-box;
+.app-layout {
+  display: flex;
+  height: 100vh;
+  width: 100vw;
+  overflow: hidden;
+  background: #0f172a;
+}
+
+.sidebar {
+  width: 300px;
+  min-width: 300px;
+  background: #1e293b;
+  border-right: 1px solid #334155;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.main-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  min-width: 0;
+  background: #0f172a;
 }
 </style>

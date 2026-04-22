@@ -8,6 +8,8 @@ export default defineConfig({
     alias: {
       '@': '/src',
       '@wailsjs': '/wailsjs'
-    }
-  }
+    },
+    // extensions: ['.js', '.ts', '.json']
+  },
+
 })

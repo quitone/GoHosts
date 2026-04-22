@@ -77,6 +77,11 @@ func NewApp(opts ...AppOption) *App {
 	return app
 }
 
+// Startup 是 Wails 应用启动时调用的方法，保存 context。
+func (a *App) Startup(ctx context.Context) {
+	a.ctx = ctx
+}
+
 // GetSystemHosts 返回系统当前 Hosts 内容。
 func (a *App) GetSystemHosts() (string, error) {
 	return a.hostsService.Read()

@@ -5,7 +5,8 @@
     "paths": {
       "@/*": ["./src/*"],
       "@wailsjs/*": ["./wailsjs/*"]
-    }
+    },
+    "types": ["./src/types/schema.d.ts", "./src/vite-env.d.ts"]
   },
   "include": ["tests/**/*.ts"]
 }

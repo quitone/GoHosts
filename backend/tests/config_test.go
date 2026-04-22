@@ -34,8 +34,8 @@ func TestConfigService_SQLiteCRUD(t *testing.T) {
 		Type:      config.SchemeLocal,
 		Content:   "127.0.0.1 dev.local",
 		Enabled:   true,
-		CreatedAt: time.Now(),
-		UpdatedAt: time.Now(),
+		CreatedAt: time.Now().Format(time.DateTime),
+		UpdatedAt: time.Now().Format(time.DateTime),
 	}
 	err = svc.SaveScheme(scheme)
 	require.NoError(t, err)

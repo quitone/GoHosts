@@ -1,38 +1,64 @@
-import { describe, it, expect, vi } from 'vitest'
-import { mount } from '@vue/test-utils'
-import SchemeManager from '@/components/SchemeManager.vue'
-// import { GetSchemes, SaveScheme, DeleteScheme } from '@wailsjs/go/main/App'
+import { describe, beforeEach, it, expect, vi } from 'vitest'
+import { mount, flushPromises } from '@vue/test-utils'
+import { createPinia, setActivePinia } from 'pinia'
+import { nextTick } from 'vue'
+import SchemeManager from '../../src/components/SchemeManager.vue'
+import { useHostsStore } from '../../src/stores/hosts'
 
-vi.mock('../../wailsjs/go/main/App', () => ({
-  GetSchemes: vi.fn(),
+vi.mock('../../wailsjs/go/app/App', () => ({
+  LoadConfig: vi.fn(),
+  SaveConfig: vi.fn(),
   SaveScheme: vi.fn(),
-  DeleteScheme: vi.fn()
+  DeleteScheme: vi.fn(),
+  GetSystemHosts: vi.fn(),
 }))
 
 describe('SchemeManager', async () => {
-  const { GetSchemes, SaveScheme, DeleteScheme } = await import('../../wailsjs/go/main/App')
+  const { LoadConfig, SaveScheme } = await import('../../wailsjs/go/app/App')
+
+  beforeEach(() => {
+    vi.clearAllMocks()
+    setActivePinia(createPinia())
+  })
 
   it('displays list of schemes', async () => {
-    const mockSchemes = [
-      { id: '1', name: '开发', type: 'local', content: '127.0.0.1 dev', enabled: true }
-    ]
-      ; (GetSchemes as any).mockResolvedValue(mockSchemes)
+    const mockConfig = {
+      schemes: [
+        {
+          id: '1',
+          name: '开发',
+          type: 'local',
+          content: '127.0.0.1 dev',
+          enabled: true,
+          createdAt: '',
+          updatedAt: '',
+        },
+      ],
+      activeScheme: '1',
+    }
+      ; (LoadConfig as any).mockResolvedValue(mockConfig)
 
     const wrapper = mount(SchemeManager)
-    await new Promise(resolve => setTimeout(resolve, 10))
+    await new Promise((resolve) => setTimeout(resolve, 10))
 
     expect(wrapper.text()).toContain('开发')
   })
 
   it('adds a new scheme', async () => {
-    ; (GetSchemes as any).mockResolvedValue([])
-      ; (SaveScheme as any).mockResolvedValue({})
+    ; (LoadConfig as any).mockResolvedValue({ schemes: [], activeScheme: '' })
+      ; (SaveScheme as any).mockResolvedValue(undefined)
 
     const wrapper = mount(SchemeManager)
-    await wrapper.find('[data-test="add-scheme"]').trigger('click')
-    await wrapper.find('[data-test="scheme-name"]').setValue('测试方案')
-    await wrapper.find('[data-test="scheme-content"]').setValue('1.1.1.1 test')
-    await wrapper.find('[data-test="save-scheme"]').trigger('click')
+    await new Promise((resolve) => setTimeout(resolve, 10))
+
+      // 由于 naive-ui 组件在 happy-dom 中渲染限制，直接操作组件内部状态测试逻辑
+      ; (wrapper.vm as any).showAddModal = true
+      ; (wrapper.vm as any).newScheme.name = '测试方案'
+      ; (wrapper.vm as any).newScheme.content = '1.1.1.1 test'
+    await nextTick()
+
+      ; (wrapper.vm as any).handleAddScheme()
+    await new Promise((resolve) => setTimeout(resolve, 10))
 
     expect(SaveScheme).toHaveBeenCalledWith(
       expect.objectContaining({ name: '测试方案', content: '1.1.1.1 test' })

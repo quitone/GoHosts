@@ -175,8 +175,8 @@ func (s *Service) SaveScheme(scheme Scheme) error {
 		return err
 	}
 
-	scheme.UpdatedAt = time.Now()
-	if scheme.CreatedAt.IsZero() {
+	scheme.UpdatedAt = time.Now().Format(time.RFC3339)
+	if scheme.CreatedAt == "" {
 		scheme.CreatedAt = scheme.UpdatedAt
 	}
 

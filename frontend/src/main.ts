@@ -1,5 +1,7 @@
-import {createApp} from 'vue'
+import { createApp } from 'vue'
+import { createPinia } from 'pinia'
+import naive from 'naive-ui'
 import App from './App.vue'
-import './style.css';
+import './style.css'
 
-createApp(App).mount('#app')
+createApp(App).use(createPinia()).use(naive).mount('#app')
