@@ -1,10 +1,10 @@
 import { describe, beforeEach, it, expect, vi } from 'vitest'
 import { mount } from '@vue/test-utils'
 import { createPinia, setActivePinia } from 'pinia'
-import ConfigManager from '../../src/components/ConfigManager.vue'
-import { useHostsStore } from '../../src/stores/hosts'
+import ConfigManager from '@/components/ConfigManager.vue'
+import { useHostsStore } from '@/stores/hosts.store'
 
-vi.mock('../../wailsjs/go/app/App', () => ({
+vi.mock('../../wailsjs/go/main/App', () => ({
   LoadConfig: vi.fn(),
   SaveConfig: vi.fn(),
   SaveScheme: vi.fn(),
@@ -41,14 +41,14 @@ describe('ConfigManager', async () => {
     store.selectScheme('1')
 
     const wrapper = mount(ConfigManager)
-    await new Promise((resolve) => setTimeout(resolve, 10))
+    await new Promise(resolve => setTimeout(resolve, 10))
 
     expect(wrapper.find('.hosts-textarea').exists()).toBe(true)
     expect(wrapper.find('.name-input').exists()).toBe(true)
   })
 
   it('saves scheme on save button click', async () => {
-    ; (SaveScheme as any).mockResolvedValue(undefined)
+    ;(SaveScheme as any).mockResolvedValue(undefined)
 
     const store = useHostsStore()
     store.schemes = [
@@ -65,14 +65,12 @@ describe('ConfigManager', async () => {
     store.selectScheme('1')
 
     const wrapper = mount(ConfigManager)
-    await new Promise((resolve) => setTimeout(resolve, 10))
+    await new Promise(resolve => setTimeout(resolve, 10))
 
     await wrapper.find('.hosts-textarea').setValue('127.0.0.1 new')
     await wrapper.find('button').trigger('click')
-    await new Promise((resolve) => setTimeout(resolve, 10))
+    await new Promise(resolve => setTimeout(resolve, 10))
 
-    expect(SaveScheme).toHaveBeenCalledWith(
-      expect.objectContaining({ id: '1', content: '127.0.0.1 new' })
-    )
+    expect(SaveScheme).toHaveBeenCalledWith(expect.objectContaining({ id: '1', content: '127.0.0.1 new' }))
   })
 })

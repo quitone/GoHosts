@@ -5,8 +5,7 @@
       <button
         data-test="refresh"
         @click="loadHosts"
-        class="px-6px py-14px b b-primary bg-transparent text-primary rounded-4px cursor-pointer text-13px transition-all duration-200 hover:bg-primary hover:text-white"
-      >
+        class="px-6px py-14px b b-primary bg-transparent text-primary rounded-4px cursor-pointer text-13px transition-all duration-200 hover:bg-primary hover:text-white">
         刷新
       </button>
     </div>
@@ -22,22 +21,21 @@
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted } from "vue";
-import { GetSystemHosts } from "@wailsjs/go/app/App";
+import { GetSystemHosts } from '@wailsjs/go/main/App'
 
-const content = ref("");
+const content = ref('')
 
 async function loadHosts() {
   try {
-    content.value = await GetSystemHosts();
+    content.value = await GetSystemHosts()
   } catch (e) {
-    console.error("Failed to load hosts:", e);
+    console.error('Failed to load hosts:', e)
   }
 }
 
 onMounted(() => {
-  loadHosts();
-});
+  loadHosts()
+})
 </script>
 
 <style scoped>

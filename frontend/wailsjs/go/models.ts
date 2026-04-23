@@ -9,6 +9,7 @@ export namespace config {
 	    enabled: boolean;
 	    createdAt: string;
 	    updatedAt: string;
+	    refreshTime: number;
 	
 	    static createFrom(source: any = {}) {
 	        return new Scheme(source);
@@ -24,6 +25,7 @@ export namespace config {
 	        this.enabled = source["enabled"];
 	        this.createdAt = source["createdAt"];
 	        this.updatedAt = source["updatedAt"];
+	        this.refreshTime = source["refreshTime"];
 	    }
 	}
 	export class Config {
@@ -57,6 +59,27 @@ export namespace config {
 		    }
 		    return a;
 		}
+	}
+
+}
+
+export namespace runtime {
+	
+	export class EnvironmentInfo {
+	    buildType: string;
+	    platform: string;
+	    arch: string;
+	
+	    static createFrom(source: any = {}) {
+	        return new EnvironmentInfo(source);
+	    }
+	
+	    constructor(source: any = {}) {
+	        if ('string' === typeof source) source = JSON.parse(source);
+	        this.buildType = source["buildType"];
+	        this.platform = source["platform"];
+	        this.arch = source["arch"];
+	    }
 	}
 
 }

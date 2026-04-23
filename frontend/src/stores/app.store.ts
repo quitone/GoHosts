@@ -1,5 +1,4 @@
 import { defineStore } from 'pinia'
-import { ref } from 'vue'
 
 export const useAppStore = defineStore('app', () => {
   const isCollapsed = ref(false)
@@ -17,9 +16,9 @@ export const useAppStore = defineStore('app', () => {
     historyVisible.value = !historyVisible.value
   }
 
-  const editConfigVisible = ref(false)
-  const openEditConfig = () => {
-    editConfigVisible.value = true
+  const editSchemaVisible = ref(false)
+  const openEditSchema = () => {
+    editSchemaVisible.value = true
   }
 
   return {
@@ -32,7 +31,7 @@ export const useAppStore = defineStore('app', () => {
     historyVisible,
     toggleHistory,
 
-    editConfigVisible,
-    openEditConfig,
+    editSchemaVisible,
+    openEditSchema,
   }
 })

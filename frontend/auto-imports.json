@@ -1,0 +1,42 @@
+[
+  {
+    "from": "vue",
+    "name": "ref",
+    "as": "ref"
+  },
+  {
+    "from": "vue",
+    "name": "unref",
+    "as": "unref"
+  },
+  {
+    "from": "vue",
+    "name": "watch",
+    "as": "watch"
+  },
+  {
+    "from": "vue",
+    "name": "computed",
+    "as": "computed"
+  },
+  {
+    "from": "vue",
+    "name": "reactive",
+    "as": "reactive"
+  },
+  {
+    "from": "vue",
+    "name": "toRaw",
+    "as": "toRaw"
+  },
+  {
+    "from": "pinia",
+    "name": "defineStore",
+    "as": "defineStore"
+  },
+  {
+    "from": "pinia",
+    "name": "storeToRefs",
+    "as": "storeToRefs"
+  }
+]

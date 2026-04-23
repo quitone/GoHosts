@@ -12,6 +12,7 @@
     "allowJs": true,
     "checkJs": false,
     "noImplicitAny": false,
+    "allowImportingTsExtensions": false,
 
     "isolatedModules": true,
     "esModuleInterop": true,
@@ -25,11 +26,15 @@
   },
 
   "include": [
+    "./node_modules/naive-ui/volar.d.ts",
     "src/**/*.ts",
     "src/**/*.d.ts",
     "src/**/*.tsx",
     "src/**/*.vue",
-    "wailsjs/**/*.ts"
+    "wailsjs/**/*.ts",
+    "./auto-imports.d.ts",
+    "./components.d.ts",
+    "vite-env.d.ts"
   ],
   "references": [
     {

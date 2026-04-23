@@ -1,13 +1,5 @@
-import { defineStore } from 'pinia'
-import { ref, computed } from 'vue'
 import type { Config, Scheme } from '@/types/schema'
-import {
-  LoadConfig,
-  SaveConfig,
-  SaveScheme,
-  DeleteScheme,
-  GetSystemHosts,
-} from '@wailsjs/go/app/App'
+import { LoadConfig, SaveConfig, SaveScheme, DeleteScheme, GetSystemHosts } from '@wailsjs/go/main/App'
 
 export const useHostsStore = defineStore('hosts', () => {
   // State
@@ -20,9 +12,7 @@ export const useHostsStore = defineStore('hosts', () => {
   const error = ref('')
 
   // Getters
-  const selectedScheme = computed(() =>
-    schemes.value.find((s) => s.id === selectedSchemeId.value) || null
-  )
+  const selectedScheme = computed(() => schemes.value.find(s => s.id === selectedSchemeId.value) || null)
 
   const activeSchemeId = computed(() => config.value?.activeScheme || '')
 
@@ -68,7 +58,7 @@ export const useHostsStore = defineStore('hosts', () => {
     error.value = ''
     try {
       await SaveScheme(scheme)
-      const idx = schemes.value.findIndex((s) => s.id === scheme.id)
+      const idx = schemes.value.findIndex(s => s.id === scheme.id)
       if (idx >= 0) {
         schemes.value[idx] = { ...scheme }
       } else {
@@ -90,7 +80,7 @@ export const useHostsStore = defineStore('hosts', () => {
     error.value = ''
     try {
       await DeleteScheme(id)
-      schemes.value = schemes.value.filter((s) => s.id !== id)
+      schemes.value = schemes.value.filter(s => s.id !== id)
       if (selectedSchemeId.value === id) {
         selectedSchemeId.value = schemes.value[0]?.id || null
       }

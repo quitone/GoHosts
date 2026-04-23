@@ -1,14 +1,14 @@
 import { describe, it, expect, vi } from 'vitest'
 import { mount } from '@vue/test-utils'
-import HostsView from '../../src/components/HostsView.vue'
-// import { GetSystemHosts } from '../../wailsjs/go/main/App'
+import HostsView from '@/components/HostsView.vue'
+// import { GetSystemHosts } from '@/wailsjs/go/main/App'
 
-vi.mock('../../wailsjs/go/app/App', () => ({
+vi.mock('@/wailsjs/go/main/App', () => ({
   GetSystemHosts: vi.fn()
 }))
 
 describe('HostsView', async () => {
-  const { GetSystemHosts } = await import('../../wailsjs/go/app/App')
+  const { GetSystemHosts } = await import('@/wailsjs/go/main/App')
   it('displays system hosts content on mount', async () => {
     const mockContent = '127.0.0.1 localhost'
       ; (GetSystemHosts as any).mockResolvedValue(mockContent)
